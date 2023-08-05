@@ -7,7 +7,7 @@ namespace GetMeThere.API.Data
     {
         public ApplicationContext()
         {
-            Database.EnsureCreated();
+            
         }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {}
