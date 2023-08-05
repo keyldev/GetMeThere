@@ -1,4 +1,4 @@
-namespace GetMeThere.API
+namespace GetMeThere.API.Models
 {
     public class WeatherForecast
     {
