@@ -1,4 +1,5 @@
-namespace GetMeThereAPI
+
+namespace GetMeThere.API
 {
     public class Program
     {
