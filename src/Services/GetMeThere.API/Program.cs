@@ -17,6 +17,7 @@ namespace GetMeThere.API
             builder.Services.AddSwaggerGen();
 
             // DI for database
+            // dependency injection for services
             builder.Services.AddDbContext<ApplicationContext>(options =>
                     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 32))));
 
