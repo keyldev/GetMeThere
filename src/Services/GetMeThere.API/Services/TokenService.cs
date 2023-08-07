@@ -14,6 +14,10 @@ namespace GetMeThere.API.Services
         {
             throw new NotImplementedException();
         }
+        RefreshToken GenerateRefreshToken(Guid userId, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
