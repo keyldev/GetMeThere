@@ -6,11 +6,11 @@ namespace GetMeThere.API.Services
     public class AuthService : IAuthService
     {
         private readonly IConfiguration _configuration;
-        private readonly IUserRepository _userRepository;
-        public AuthService(IConfiguration configuration, IUserRepository userRepository)
+        private readonly IAuthRepository _authRepository;
+        public AuthService(IConfiguration configuration, IAuthRepository authRepository)
         {
             _configuration = configuration;
-            _userRepository = userRepository;
+            _authRepository = authRepository;
         }
 
         public JwtAuthResult Login(LoginRequest request)
