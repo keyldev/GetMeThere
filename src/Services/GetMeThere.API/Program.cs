@@ -16,6 +16,8 @@ namespace GetMeThere.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+
             // DI for database
             // dependency injection for services
             builder.Services.AddDbContext<ApplicationContext>(options =>
