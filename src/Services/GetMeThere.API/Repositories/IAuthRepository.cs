@@ -2,5 +2,8 @@
 {
     public interface IAuthRepository
     {
+
+        bool IsUserExists(string login, string password);
+
     }
 }

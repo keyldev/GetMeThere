@@ -3,18 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GetMeThere.API.Data
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
         #region DbSets
         public DbSet<User> Users { get; set; }
 
 
         #endregion
-        public ApplicationContext()
+        public ApplicationDbContext()
         {
             
         }
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {}
         
     }

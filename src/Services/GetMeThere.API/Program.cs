@@ -40,7 +40,7 @@ namespace GetMeThere.API
 
             // DI for database
             // dependency injection for services
-            builder.Services.AddDbContext<ApplicationContext>(options =>
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 32))));
 
 
