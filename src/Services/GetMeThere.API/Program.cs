@@ -35,7 +35,8 @@ namespace GetMeThere.API
 
                 };
             });
-            builder.Services.AddScoped<TokenService>();
+
+            builder.Services.AddScoped<ITokenService, TokenService>();
 
             // DI for database
             // dependency injection for services
