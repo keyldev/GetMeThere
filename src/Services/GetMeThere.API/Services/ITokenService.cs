@@ -10,7 +10,7 @@ namespace GetMeThere.API.Services
         /// </summary>
         /// <param name="claims"></param>
         /// <returns></returns>
-        public string GenerateAccessToken(IEnumerable<Claim> claims);
+        public string GetAccessToken(IEnumerable<Claim> claims);
 
         /// <summary>
         /// Generate Refresh & Access Tokens
@@ -19,7 +19,7 @@ namespace GetMeThere.API.Services
         /// <param name="claims"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        public JwtAuthResult GenerateTokens(User user, IEnumerable<Claim> claims, DateTime date);
+        public JwtAuthResult GetTokens(User user, IEnumerable<Claim> claims, DateTime date);
         /// <summary>
         /// Method for generating refresh token
         /// </summary>

@@ -5,16 +5,26 @@ namespace GetMeThere.API.Services
 {
     public class TokenService : ITokenService
     {
-        public string GenerateAccessToken(IEnumerable<Claim> claims)
+        private readonly IConfiguration _configuration;
+        public TokenService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public string GetAccessToken(IEnumerable<Claim> claims)
         {
             throw new NotImplementedException();
         }
 
-        public JwtAuthResult GenerateTokens(User user, IEnumerable<Claim> claims, DateTime date)
+        public JwtAuthResult GetTokens(User user, IEnumerable<Claim> claims, DateTime date)
         {
             throw new NotImplementedException();
         }
-        RefreshToken GenerateRefreshToken(Guid userId, DateTime date)
+        private string GenerateAccessToken(IEnumerable<Claim> claims)
+        {
+            throw new NotImplementedException();
+        }
+        private RefreshToken GenerateRefreshToken(Guid userId, DateTime date)
         {
             throw new NotImplementedException();
         }
