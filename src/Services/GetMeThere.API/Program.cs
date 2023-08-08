@@ -1,6 +1,10 @@
 
 using GetMeThere.API.Data;
+using GetMeThere.API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace GetMeThere.API
 {
@@ -16,7 +20,22 @@ namespace GetMeThere.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = builder.Configuration.GetSection("Jwt")["Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = builder.Configuration.GetSection("Jwt")["Audience"],
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt")["Key"])),
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero
 
+                };
+            });
+            builder.Services.AddScoped<TokenService>();
 
             // DI for database
             // dependency injection for services
