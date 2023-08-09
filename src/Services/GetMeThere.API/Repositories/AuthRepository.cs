@@ -1,5 +1,6 @@
 ﻿using GetMeThere.API.Data;
 using GetMeThere.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GetMeThere.API.Repositories
 {
@@ -57,19 +58,21 @@ namespace GetMeThere.API.Repositories
             var user = _dbContext.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
             return user != null;
         }
-        public User GetUser(string login, string password)
-        {
-            return _dbContext.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
+        public async Task<User> GetUser(string login, string password)
+        {        
+            return await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == login && u.Password == password);
         }
 
-        public bool UpdateUserRefreshToken(Guid userId, RefreshToken refreshToken)
+        public async Task<bool> UpdateUserRefreshToken(Guid userId, RefreshToken refreshToken)
         {
-            var userToken = _dbContext.RefreshTokens.SingleOrDefault(rt => rt.UserId == userId);
+            var userToken = await _dbContext.RefreshTokens.FirstOrDefaultAsync(rt => rt.UserId == userId);
             if (userToken != null)
             {
-                refreshToken.TokenId = userToken.TokenId;
+                userToken.TokenString = refreshToken.TokenString;
+
+                userToken.ExpiryTime = refreshToken.ExpiryTime;
                 
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
             else

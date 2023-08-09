@@ -19,9 +19,9 @@ namespace GetMeThere.API.Controllers
         }
         //change it into async task.
         [HttpPost("login")]
-        public IActionResult Login([FromBody]LoginRequest login)
+        public async Task<IActionResult> Login([FromBody]LoginRequest login)
         {
-            var loginResult = _authService.Login(login);
+            var loginResult = await _authService.Login(login);
 
             if (loginResult == null)
             {

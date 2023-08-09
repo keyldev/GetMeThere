@@ -16,9 +16,9 @@ namespace GetMeThere.API.Services
             _tokenService = tokenService;
         }
 
-        public JwtAuthResult Login(LoginRequest request)
+        public async Task<JwtAuthResult> Login(LoginRequest request)
         {
-            var user = _authRepository.GetUser(login: request.Username, password: request.Password);
+            var user = await _authRepository.GetUser(login: request.Username, password: request.Password);
             if (user != null)
             {
                 var claims = new[]
@@ -33,7 +33,7 @@ namespace GetMeThere.API.Services
                 if(refreshToken is not null && refreshToken.ExpiryTime < DateTime.UtcNow)
                 {
                     refreshToken = _tokenService.GetRefreshToken(user.Id, DateTime.UtcNow);
-                    _authRepository.InsertUserRefreshToken(refreshToken);
+                    _authRepository.UpdateUserRefreshToken(user.Id, refreshToken);
                 }
                 else
                 {
