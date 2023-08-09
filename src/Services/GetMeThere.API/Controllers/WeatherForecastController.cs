@@ -1,4 +1,6 @@
 using GetMeThere.API.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetMeThere.API.Controllers
@@ -18,7 +20,7 @@ namespace GetMeThere.API.Controllers
         {
             _logger = logger;
         }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

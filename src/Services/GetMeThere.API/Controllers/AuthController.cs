@@ -33,9 +33,9 @@ namespace GetMeThere.API.Controllers
             else return Ok(loginResult);
         }
         [HttpPost("register")]
-        public IActionResult Register([FromBody] RegisterRequest registerRequest)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
         {
-            var registerResult = _authService.Register(registerRequest);
+            var registerResult = await _authService.Register(registerRequest);
             if (registerResult == null)
             {
                 // add more info about errors
