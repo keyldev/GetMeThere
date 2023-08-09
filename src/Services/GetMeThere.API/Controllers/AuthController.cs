@@ -20,9 +20,16 @@ namespace GetMeThere.API.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginRequest login)
         {
-            
+            var loginResult = _authService.Login(login);
 
-            throw new NotImplementedException();
+            if (loginResult == null)
+            {
+                return NotFound(new
+                {
+                    message = "Account not found!"
+                });
+            }
+            else return Ok(loginResult);
         }
 
     }

@@ -1,5 +1,6 @@
 
 using GetMeThere.API.Data;
+using GetMeThere.API.Repositories;
 using GetMeThere.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +37,9 @@ namespace GetMeThere.API
                 };
             });
             // Di for Services
+            builder.Services.AddScoped<IAuthRepository, AuthRepository>();
             builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
 
             // DI for database
             // dependency injection for services
