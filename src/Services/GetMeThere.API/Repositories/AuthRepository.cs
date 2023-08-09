@@ -12,15 +12,15 @@ namespace GetMeThere.API.Repositories
             _dbContext = db;
         }
 
-        public User CreateUser(RegisterRequest request)
+        public async Task<User> CreateUser(RegisterRequest request)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Login == request.Login || u.Login == request.Email);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == request.Login || u.Login == request.Email);
             if (user == null)
             {
                 User u = new User(request);
 
-                _dbContext.Users.Add(u);
-                _dbContext.SaveChanges();
+                await _dbContext.Users.AddAsync(u);
+                await _dbContext.SaveChangesAsync();
                 return u;
             }
             else
@@ -46,20 +46,20 @@ namespace GetMeThere.API.Repositories
             }
         }
 
-        public void InsertUserRefreshToken(RefreshToken refreshToken)
+        public async Task InsertUserRefreshToken(RefreshToken refreshToken)
         {
-            _dbContext.RefreshTokens.Add(refreshToken);
-            _dbContext.SaveChanges();
+            await _dbContext.RefreshTokens.AddAsync(refreshToken);
+            await _dbContext.SaveChangesAsync();
 
         }
 
-        public bool IsUserExists(string login, string password)
+        public async Task<bool> IsUserExists(string login, string password)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == login && u.Password == password);
             return user != null;
         }
         public async Task<User> GetUser(string login, string password)
-        {        
+        {
             return await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == login && u.Password == password);
         }
 
@@ -71,7 +71,7 @@ namespace GetMeThere.API.Repositories
                 userToken.TokenString = refreshToken.TokenString;
 
                 userToken.ExpiryTime = refreshToken.ExpiryTime;
-                
+
                 await _dbContext.SaveChangesAsync();
                 return true;
             }

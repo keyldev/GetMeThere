@@ -41,7 +41,7 @@ namespace GetMeThere.API.Services
                     _authRepository.InsertUserRefreshToken(refreshToken);
                 }
 
-                
+                // change to AuthResultDto with AccessToken & RefreshToken only?
                 return new JwtAuthResult
                 {
                     AccessToken = accessToken,
@@ -55,23 +55,23 @@ namespace GetMeThere.API.Services
             }
         }
 
-        public JwtAuthResult Register(RegisterRequest request)
+        public async Task<JwtAuthResult> Register(RegisterRequest request)
         {
-            var isUserExists = _authRepository.IsUserExists(login: request.Login, password: request.Password);
+            var isUserExists = await _authRepository.IsUserExists(login: request.Login, password: request.Password);
             if (isUserExists)
             {
                 return null;
             }
             else
             {
-                var user = _authRepository.CreateUser(request);
+                var user = await _authRepository.CreateUser(request);
                 var claims = new[]
                 {
                     new Claim(ClaimTypes.Name, user.Name)
                 };
                 
                 var tokens = _tokenService.GetTokens(user, claims, DateTime.UtcNow);
-                _authRepository.InsertUserRefreshToken(tokens.RefreshToken);
+                await _authRepository.InsertUserRefreshToken(tokens.RefreshToken);
 
                 return tokens;
             }
