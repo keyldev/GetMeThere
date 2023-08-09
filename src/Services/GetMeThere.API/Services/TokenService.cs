@@ -56,7 +56,7 @@ namespace GetMeThere.API.Services
             return new RefreshToken
             {
                 UserId = userId,
-                ExpiryTime = date.AddMinutes(1),
+                ExpiryTime = date.AddMonths(3),
                 TokenString = token
             };
         }
