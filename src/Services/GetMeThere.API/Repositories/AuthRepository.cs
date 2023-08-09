@@ -12,7 +12,8 @@ namespace GetMeThere.API.Repositories
 
         public bool IsUserExists(string login, string password)
         {
-            throw new NotImplementedException();
+            var user = _dbContext.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
+            return user != null;
         }
     }
 }
