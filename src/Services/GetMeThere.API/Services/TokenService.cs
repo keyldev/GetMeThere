@@ -19,7 +19,11 @@ namespace GetMeThere.API.Services
         {
             return GenerateAccessToken(claims);
         }
-
+        public RefreshToken GetRefreshToken(Guid userId, DateTime date)
+        {
+            return GenerateRefreshToken(userId, date);
+        }
+        
         public JwtAuthResult GetTokens(User user, IEnumerable<Claim> claims, DateTime date)
         {
             return new JwtAuthResult
@@ -52,7 +56,7 @@ namespace GetMeThere.API.Services
             return new RefreshToken
             {
                 UserId = userId,
-                ExpiryTime = date.AddMonths(3),
+                ExpiryTime = date.AddMinutes(1),
                 TokenString = token
             };
         }

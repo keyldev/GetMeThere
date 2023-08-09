@@ -7,6 +7,7 @@ namespace GetMeThere.API.Data
     {
         #region DbSets
         public DbSet<User> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
         #endregion

@@ -13,13 +13,14 @@ namespace GetMeThere.API.Services
         public string GetAccessToken(IEnumerable<Claim> claims);
 
         /// <summary>
-        /// Generate Refresh & Access Tokens
+        /// Generate's and returns the access token and the refresh token
         /// </summary>
         /// <param name="user"></param>
         /// <param name="claims"></param>
         /// <param name="date"></param>
-        /// <returns></returns>
+        /// <returns>Refresh & Access tokens</returns>
         public JwtAuthResult GetTokens(User user, IEnumerable<Claim> claims, DateTime date);
+        public RefreshToken GetRefreshToken(Guid userId, DateTime date);
         /// <summary>
         /// Method for generating refresh token
         /// </summary>

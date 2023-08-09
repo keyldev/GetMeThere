@@ -6,7 +6,13 @@ namespace GetMeThere.API.Repositories
     {
 
         bool IsUserExists(string login, string password);
+        User GetUser(string login, string password);
         RefreshToken GetUserRefreshToken(string login);
+        
+        bool UpdateUserRefreshToken(Guid userId, RefreshToken refreshToken);
+        void InsertUserRefreshToken(RefreshToken refreshToken);
+
+        User CreateUser(RegisterRequest request);
 
     }
 }

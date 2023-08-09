@@ -17,8 +17,9 @@ namespace GetMeThere.API.Controllers
             _configuration = configuration;
             _authService = authService;
         }
+        //change it into async task.
         [HttpPost("login")]
-        public IActionResult Login(LoginRequest login)
+        public IActionResult Login([FromBody]LoginRequest login)
         {
             var loginResult = _authService.Login(login);
 
@@ -30,6 +31,20 @@ namespace GetMeThere.API.Controllers
                 });
             }
             else return Ok(loginResult);
+        }
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] RegisterRequest registerRequest)
+        {
+            var registerResult = _authService.Register(registerRequest);
+            if (registerResult == null)
+            {
+                // add more info about errors
+                return BadRequest(new
+                {
+                    message = "An error has occured"
+                });
+            }
+            else return Ok(registerResult);
         }
 
     }
