@@ -10,12 +10,12 @@ namespace GetMeThere.API.Models
         public string? ClientName { get; set; }
         public string? PickupAddress { get; set; }
         //address coords
-        public float PickupLatitude { get; set; }
-        public float PickupLongitude { get; set; }
+        public double PickupLatitude { get; set; }
+        public double PickupLongitude { get; set; }
 
         public string? DestinationAddress { get; set; } // string + coords
-        public float DestinationLatitude { get; set; }
-        public float DestinationLongitude { get; set; }
+        public double DestinationLatitude { get; set; }
+        public double DestinationLongitude { get; set; }
 
         public DateTime PickupTime { get; set; }
         public float OrderPrice { get; set; } // km * defaultTaxPerKm = 7 * 25 = 170
