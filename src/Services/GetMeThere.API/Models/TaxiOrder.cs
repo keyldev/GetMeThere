@@ -22,6 +22,8 @@ namespace GetMeThere.API.Models
         //public string? ClientPhoneNumber { get; set; } // yes or not
         public bool IsCompleted { get; set; }
         public bool IsConfirmed { get; set; }
+        public bool NeedChildSeat { get; set; } // 
+        public int SeatsCount { get; set; }
 
     }
 }
