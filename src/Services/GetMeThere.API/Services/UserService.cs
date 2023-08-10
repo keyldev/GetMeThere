@@ -4,10 +4,10 @@ namespace GetMeThere.API.Services
 {
     public class UserService : IUserService
     {
-        public User CreateUser(User user)
+        public UserService()
         {
-            throw new NotImplementedException();
+            
         }
-        
+
     }
 }

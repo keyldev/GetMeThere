@@ -5,7 +5,7 @@ namespace GetMeThere.API.Services
     public interface IUserService
     {
         // user or UserDto
-        User CreateUser(User user);
+        void GetUserInfo(string username); // or userid?
 
     }
 }
