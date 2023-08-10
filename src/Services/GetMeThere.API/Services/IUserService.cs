@@ -1,11 +1,12 @@
 ﻿using GetMeThere.API.Models;
+using GetMeThere.API.Models.DTO;
 
 namespace GetMeThere.API.Services
 {
     public interface IUserService
     {
         // user or UserDto
-        void GetUserInfo(string username); // or userid?
+        UserDto GetUserInfo(string username); // or userid?
 
     }
 }
