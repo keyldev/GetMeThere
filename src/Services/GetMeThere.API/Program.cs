@@ -1,5 +1,6 @@
 
 using GetMeThere.API.Data;
+using GetMeThere.API.Hubs;
 using GetMeThere.API.Repositories;
 using GetMeThere.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,6 +17,7 @@ namespace GetMeThere.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddSignalR();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -63,7 +65,9 @@ namespace GetMeThere.API
             app.UseAuthorization();
 
 
-            app.MapControllers();
+            app.MapControllers(); 
+            app.MapHub<TaxiHub>("/taxiHub");
+
 
             app.Run();
         }
