@@ -17,6 +17,8 @@ namespace GetMeThere.API.Models
         public double DestinationLatitude { get; set; }
         public double DestinationLongitude { get; set; }
 
+        public VehicleType VehicleType { get; set; } // 0 standart, 1 prem, 2 lux
+
         public DateTime PickupTime { get; set; }
         public float OrderPrice { get; set; } // km * defaultTaxPerKm + priceByCarType = 7 * 25 + 100 = 270
         //public string? ClientPhoneNumber { get; set; } // yes or not

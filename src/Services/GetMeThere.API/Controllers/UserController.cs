@@ -28,6 +28,7 @@ namespace GetMeThere.API.Controllers
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var username = identity.Name;
             
+            
             var userInfo = await _userService.GetUserInfo(username);
             if (userInfo == null) return BadRequest(new
             {
