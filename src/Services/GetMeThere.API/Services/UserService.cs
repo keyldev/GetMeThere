@@ -12,9 +12,17 @@ namespace GetMeThere.API.Services
             _userRepository = userRepository;
         }
 
-        public UserDto GetUserInfo(string username)
+
+        public async Task<UserDto> GetUserInfo(string username)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetUserInfo(username);
+            if(user is null) { return null; }
+            else
+            {
+                UserDto userDto = new UserDto(user.Id, user.Login, user.Login, user.Password);
+                return userDto;
+            }
+            
         }
     }
 }

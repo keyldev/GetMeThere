@@ -5,6 +5,6 @@ namespace GetMeThere.API.Repositories
     public interface IUserRepository
     {
 
-        User GetUserInfo();
+        Task<User> GetUserInfo(string username);
     }
 }

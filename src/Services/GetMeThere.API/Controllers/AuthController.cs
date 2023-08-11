@@ -1,5 +1,7 @@
 ﻿using GetMeThere.API.Models;
 using GetMeThere.API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -46,7 +48,6 @@ namespace GetMeThere.API.Controllers
             }
             else return Ok(registerResult);
         }
-
 
     }
 }
