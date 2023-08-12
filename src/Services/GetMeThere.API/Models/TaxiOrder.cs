@@ -27,5 +27,8 @@ namespace GetMeThere.API.Models
         public bool NeedChildSeat { get; set; } = false; //
         public int SeatsCount { get; set; } = 2;
 
+        public Guid? DriverId { get; set; }
+        public TaxiDriver? TaxiDriver { get; set; }
+
     }
 }

@@ -27,6 +27,7 @@ namespace GetMeThere.API
             {
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
+
                     ValidateIssuer = true,
                     ValidIssuer = builder.Configuration.GetSection("Jwt")["Issuer"],
                     ValidateAudience = true,
@@ -42,8 +43,10 @@ namespace GetMeThere.API
             builder.Services.AddScoped<IAuthRepository, AuthRepository>();
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
+
             builder.Services.AddScoped<ITaxiOrderRepository, TaxiOrderRepository>();
             builder.Services.AddScoped<ITaxiOrderService, TaxiOrderService>();
 

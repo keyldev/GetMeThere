@@ -8,7 +8,9 @@ namespace GetMeThere.API.Data
         #region DbSets
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-
+        public DbSet<TaxiOrder> TaxiOrders { get; set; }
+        public DbSet<TaxiDriver> TaxiDrivers { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
 
         #endregion
         public ApplicationDbContext()
