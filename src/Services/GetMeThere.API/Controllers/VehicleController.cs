@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GetMeThere.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class VehicleController : ControllerBase
     {
+
+
     }
 }
