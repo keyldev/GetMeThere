@@ -27,6 +27,11 @@ namespace GetMeThere.API.Controllers
         {
             throw new NotImplementedException();
         }
+        [HttpDelete("delete/{vehicleId}")]
+        public async Task<IActionResult> DeleteVehicle(Guid vehicleId) // change to vehicle dto?
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

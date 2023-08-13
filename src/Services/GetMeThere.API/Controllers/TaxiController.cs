@@ -15,11 +15,10 @@ namespace GetMeThere.API.Controllers
     // bad naming
     public class TaxiController : ControllerBase
     {
-        private readonly IHubContext<TaxiHub> _taxiHubContext;
         private readonly ITaxiOrderService _taxOrderService;
-        public TaxiController(IHubContext<TaxiHub> taxiHubContext, ITaxiOrderService taxiOrderService)
+        public TaxiController(ITaxiOrderService taxiOrderService)
         {
-            _taxiHubContext = taxiHubContext;
+            
             _taxOrderService = taxiOrderService;
         }
         [HttpPost("order")]
@@ -27,7 +26,7 @@ namespace GetMeThere.API.Controllers
         public async Task<IActionResult> PostOrder([FromBody] TaxiOrder order)
         {
 
-            await _taxiHubContext.Clients.All.SendAsync("NewOrder", order);
+            
             return Ok();
         }
 
