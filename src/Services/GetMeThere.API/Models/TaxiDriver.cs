@@ -12,6 +12,6 @@ namespace GetMeThere.API.Models
         public Guid VehicleId { get; set; }
         public Vehicle? Vehicle { get; set; } // navigation property
 
-        public ICollection<TaxiOrder> Orders { get; set; }
+        //public ICollection<TaxiOrder> Orders { get; set; }
     }
 }
