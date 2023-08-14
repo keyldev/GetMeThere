@@ -8,6 +8,7 @@ namespace GetMeThere.API.Repositories
         Task<bool> IsUserExists(string login, string password);
         Task<User> GetUser(string login, string password);
         RefreshToken GetUserRefreshToken(string login);
+        Task UpdateUserConnectionId(string connectionId);
         
         Task<bool> UpdateUserRefreshToken(Guid userId, RefreshToken refreshToken);
         Task InsertUserRefreshToken(RefreshToken refreshToken);

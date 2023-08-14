@@ -81,5 +81,10 @@ namespace GetMeThere.API.Repositories
             }
 
         }
+
+        public Task UpdateUserConnectionId(string connectionId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

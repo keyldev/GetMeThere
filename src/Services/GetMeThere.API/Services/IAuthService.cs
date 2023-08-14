@@ -1,11 +1,12 @@
 ﻿using GetMeThere.API.Models;
+using GetMeThere.API.Models.DTO;
 
 namespace GetMeThere.API.Services
 {
     public interface IAuthService
     {
-        public Task<JwtAuthResult> Login(LoginRequest request);
-        public Task<JwtAuthResult> Register(RegisterRequest request);
+        public Task<AuthResultDto> Login(LoginRequest request);
+        public Task<AuthResultDto> Register(RegisterRequest request);
 
     }
 }
