@@ -52,6 +52,10 @@ namespace GetMeThere.API
 
             builder.Services.AddScoped<ITaxiDriverService, TaxiDriverService>();
 
+            builder.Services.AddScoped<ITaxiHubService, TaxiHubService>();
+            builder.Services.AddScoped<ITaxiHubRepository, TaxiHubRepository>();
+            
+
 
             // DI for database
             // dependency injection for services

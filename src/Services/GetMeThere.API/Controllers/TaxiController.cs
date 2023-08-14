@@ -27,7 +27,7 @@ namespace GetMeThere.API.Controllers
         // taxiorder
         public async Task<IActionResult> PostOrder([FromBody] TaxiOrder order)
         {
-            _taxiOrderService.SendNewOrderNotification(order);
+            await _taxiOrderService.SendNewOrderNotification(order);
             
             return Ok();
         }
