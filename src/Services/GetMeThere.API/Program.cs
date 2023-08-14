@@ -50,6 +50,8 @@ namespace GetMeThere.API
             builder.Services.AddScoped<ITaxiOrderRepository, TaxiOrderRepository>();
             builder.Services.AddScoped<ITaxiOrderService, TaxiOrderService>();
 
+            builder.Services.AddScoped<ITaxiDriverService, TaxiDriverService>();
+
 
             // DI for database
             // dependency injection for services

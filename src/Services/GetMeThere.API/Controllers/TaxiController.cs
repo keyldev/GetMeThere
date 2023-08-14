@@ -15,17 +15,19 @@ namespace GetMeThere.API.Controllers
     // bad naming
     public class TaxiController : ControllerBase
     {
-        private readonly ITaxiOrderService _taxOrderService;
+        private readonly ITaxiOrderService _taxiOrderService;
         public TaxiController(ITaxiOrderService taxiOrderService)
         {
             
-            _taxOrderService = taxiOrderService;
+            _taxiOrderService = taxiOrderService;
+
+
         }
         [HttpPost("order")]
         // taxiorder
         public async Task<IActionResult> PostOrder([FromBody] TaxiOrder order)
         {
-
+            _taxiOrderService.SendNewOrderNotification(order);
             
             return Ok();
         }

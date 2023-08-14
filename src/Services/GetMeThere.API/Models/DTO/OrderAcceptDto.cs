@@ -7,6 +7,6 @@ namespace GetMeThere.API.Models.DTO
         [Required]
         public Guid DriverId { get; set; }
         [Required]
-        public Guid OrderId { get; set; }
+        public string OrderId { get; set; }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using GetMeThere.API.Hubs;
 using GetMeThere.API.Models;
 using GetMeThere.API.Models.DTO;
+using GetMeThere.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System.Diagnostics;
 
 namespace GetMeThere.API.Controllers
 {
@@ -13,10 +15,12 @@ namespace GetMeThere.API.Controllers
     public class TaxiDriverController : ControllerBase
     {
         private readonly IHubContext<TaxiHub> _taxiHubContext;
+        private readonly ITaxiDriverService _taxiDriverService;
+        
 
-        public TaxiDriverController(IHubContext<TaxiHub> taxiHubContext)
+        public TaxiDriverController(ITaxiDriverService taxiDriverService)
         {
-            _taxiHubContext = taxiHubContext;
+            _taxiDriverService = taxiDriverService;
         }
         [HttpPost("add")]
         public async Task<IActionResult> AddNewDriver([FromBody] TaxiDriver driver)
@@ -31,7 +35,9 @@ namespace GetMeThere.API.Controllers
         [HttpPost("order/accept")]
         public async Task<IActionResult> AcceptOrder([FromBody] OrderAcceptDto order)
         {
-            throw new NotImplementedException();
+            _taxiDriverService.SendOrderAccepted(order);
+            
+            return Ok();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GetMeThere.API.Hubs;
-using Microsoft.AspNet.SignalR;
+using GetMeThere.API.Models;
+using Microsoft.AspNetCore.SignalR;
 
 namespace GetMeThere.API.Services
 {
@@ -10,7 +11,10 @@ namespace GetMeThere.API.Services
         {
             _taxiHubContext = hubContext;
         }
+        public async Task SendNewOrderNotification(TaxiOrder order)
+        {
+            await _taxiHubContext.Clients.All.SendAsync("NewOrder", order);
+        }
 
-        //await _taxiHubContext.Clients.All.SendAsync("NewOrder", order);
     }
 }
