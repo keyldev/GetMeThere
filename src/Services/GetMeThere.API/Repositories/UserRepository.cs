@@ -15,5 +15,6 @@ namespace GetMeThere.API.Repositories
         {
             return await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == username);
         }
+        
     }
 }

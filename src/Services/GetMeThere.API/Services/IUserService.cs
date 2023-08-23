@@ -7,6 +7,8 @@ namespace GetMeThere.API.Services
     {
         // user or UserDto
         Task<UserDto> GetUserInfo(string username); // or userid?
+        Task<UserDto> UpdateUserInfo(UserDto userDto);
+        Task<bool> DeleteUserAccount(UserDto user);
 
     }
 }
