@@ -9,6 +9,8 @@
 
         public string ConnectionId { get; set; }
 
+        
+
         public User()
         {
 

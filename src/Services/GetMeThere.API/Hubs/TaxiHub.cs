@@ -28,5 +28,13 @@ namespace GetMeThere.API.Hubs
 
             await base.OnConnectedAsync();
         }
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            var username = Context.User.Identity.Name;
+            var connectionId = Context.ConnectionId;
+            await _taxiHubService.UpdateUserConnectionId(username, ""); // todo: add the 
+
+            await base.OnDisconnectedAsync(exception);
+        }
     }
 }

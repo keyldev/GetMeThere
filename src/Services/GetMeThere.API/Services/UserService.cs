@@ -12,6 +12,10 @@ namespace GetMeThere.API.Services
             _userRepository = userRepository;
         }
 
+        public Task<bool> DeleteUserAccount(UserDto user)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<UserDto> GetUserInfo(string username)
         {
@@ -23,6 +27,11 @@ namespace GetMeThere.API.Services
                 return userDto;
             }
             
+        }
+
+        public Task<UserDto> UpdateUserInfo(UserDto userDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

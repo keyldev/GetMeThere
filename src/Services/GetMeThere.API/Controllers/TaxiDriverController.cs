@@ -27,7 +27,7 @@ namespace GetMeThere.API.Controllers
         {
             throw new NotImplementedException();
         }
-        [HttpGet("get/all")]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllDrivers()
         {
             throw new NotImplementedException();
@@ -39,5 +39,8 @@ namespace GetMeThere.API.Controllers
             
             return Ok();
         }
+
+        
+
     }
 }
