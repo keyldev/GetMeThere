@@ -12,9 +12,10 @@ namespace GetMeThere.API.Services
             _userRepository = userRepository;
         }
 
-        public Task<bool> DeleteUserAccount(UserDto user)
+        public async Task<bool> DeleteUserAccount(UserDto user)
         {
-            throw new NotImplementedException();
+            var result = await _userRepository.DeleteUserAccount(user);
+            return result;
         }
 
         public async Task<UserDto> GetUserInfo(string username)

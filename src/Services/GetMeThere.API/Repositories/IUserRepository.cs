@@ -1,4 +1,5 @@
 ﻿using GetMeThere.API.Models;
+using GetMeThere.API.Models.DTO;
 
 namespace GetMeThere.API.Repositories
 {
@@ -6,5 +7,6 @@ namespace GetMeThere.API.Repositories
     {
 
         Task<User> GetUserInfo(string username);
+        Task<bool> DeleteUserAccount(UserDto user);
     }
 }
