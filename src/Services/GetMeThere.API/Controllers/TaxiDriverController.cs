@@ -14,9 +14,8 @@ namespace GetMeThere.API.Controllers
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class TaxiDriverController : ControllerBase
     {
-        private readonly IHubContext<TaxiHub> _taxiHubContext;
         private readonly ITaxiDriverService _taxiDriverService;
-        
+
 
         public TaxiDriverController(ITaxiDriverService taxiDriverService)
         {
@@ -30,17 +29,22 @@ namespace GetMeThere.API.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GetAllDrivers()
         {
-            throw new NotImplementedException();
+            var result = await _taxiDriverService.GetAllDriversAsync();
+            if (result is null)
+            {
+                return NotFound(new { message = "There are now drivers found" });
+            }
+            else return Ok(result);
         }
         [HttpPost("order/accept")]
         public async Task<IActionResult> AcceptOrder([FromBody] OrderAcceptDto order)
         {
             _taxiDriverService.SendOrderAccepted(order);
-            
+
             return Ok();
         }
 
-        
+
 
     }
 }

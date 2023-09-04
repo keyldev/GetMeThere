@@ -11,6 +11,12 @@ namespace GetMeThere.API.Services
         {
             this.taxiHubContext = taxiHubContext;
         }
+
+        public Task<List<TaxiDriverDto>> GetAllDriversAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task SendOrderAccepted(OrderAcceptDto orderAcceptDto)
         {
             // for test
