@@ -8,3 +8,4 @@
 # Функционал
 Серверная часть разрабатывается при помощи таких технологий как:
 - ASP.NET Core, .NET 7, Entity Framework Core, SignalR.
+- .NET MAUI (cross-platform application);
