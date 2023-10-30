@@ -8,4 +8,4 @@
 # Функционал
 Проект разрабатывается используя следующие технологии:
 - ASP.NET Core, .NET 7, Entity Framework Core, SignalR.
-- .NET MAUI (cross-platform application);
+- .NET MAUI (cross-platform application); not started
