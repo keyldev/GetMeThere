@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Rider.ViewModels"
+             xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
+             x:Class="Mobile.Rider.Pages.TripPage"
+             x:DataType="vm:TripViewModel"
+             Style="{StaticResource AppPage}"
+             Shell.NavBarIsVisible="False">
+    <Grid>
+        <mapsui:MapControl x:Name="MapView" />
+
+        <Frame VerticalOptions="Start" HorizontalOptions="Center" Margin="0,18,0,0"
+               Style="{StaticResource ChipFrame}" Padding="14,8">
+            <HorizontalStackLayout Spacing="8">
+                <Label Text="🚖" FontSize="18" VerticalOptions="Center" />
+                <Label Style="{StaticResource BodyLabel}" Text="{Binding StatusText}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </Frame>
+
+        <Frame VerticalOptions="End" Margin="14,0,14,14" Style="{StaticResource CardFrame}" Padding="20">
+            <HorizontalStackLayout Spacing="14" VerticalOptions="Center">
+                <Frame BackgroundColor="{StaticResource BrandSoft}" CornerRadius="22"
+                       HeightRequest="44" WidthRequest="44" Padding="0"
+                       HasShadow="False" BorderColor="Transparent">
+                    <Label Text="🚖" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Frame>
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Style="{StaticResource Title2Label}" Text="Едем к точке" />
+                    <Label Style="{StaticResource CaptionLabel}" Text="Расслабьтесь, мы почти там" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

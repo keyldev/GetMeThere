@@ -1,0 +1,69 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  api:
+    name: API + tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore API
+        run: dotnet restore src/Services/GetMeThere.API/GetMeThere.API.csproj
+
+      - name: Build API
+        run: dotnet build src/Services/GetMeThere.API/GetMeThere.API.csproj --configuration Release --no-restore
+
+      - name: Restore tests
+        run: dotnet restore tests/GetMeThere.API.Tests/GetMeThere.API.Tests.csproj
+
+      - name: Test
+        run: dotnet test tests/GetMeThere.API.Tests/GetMeThere.API.Tests.csproj --configuration Release --no-restore --verbosity normal
+
+  mobile:
+    name: Mobile (Android)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Cache MAUI workloads
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.dotnet/sdk-manifests
+            ~/.dotnet/packs/Microsoft.Maui.*
+            ~/.dotnet/packs/Microsoft.Android.*
+            ~/.dotnet/metadata/workloads
+          key: maui-net9-${{ runner.os }}-v1
+
+      - name: Install MAUI workload (Android only)
+        run: dotnet workload install android --skip-sign-check
+
+      - name: Restore Mobile.Shared
+        run: dotnet restore src/Mobile/Mobile.Shared/Mobile.Shared.csproj
+
+      - name: Build Mobile.Shared (net9.0)
+        run: dotnet build src/Mobile/Mobile.Shared/Mobile.Shared.csproj --configuration Release --framework net9.0 --no-restore
+
+      - name: Build Mobile.Rider (net9.0-android)
+        run: dotnet build src/Mobile/Mobile.Rider/Mobile.Rider.csproj --configuration Release --framework net9.0-android
+
+      - name: Build Mobile.Driver (net9.0-android)
+        run: dotnet build src/Mobile/Mobile.Driver/Mobile.Driver.csproj --configuration Release --framework net9.0-android

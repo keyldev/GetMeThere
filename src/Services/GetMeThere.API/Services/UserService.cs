@@ -18,16 +18,11 @@ namespace GetMeThere.API.Services
             return result;
         }
 
-        public async Task<UserDto> GetUserInfo(string username)
+        public async Task<UserDto?> GetUserInfo(string username)
         {
             var user = await _userRepository.GetUserInfo(username);
-            if(user is null) { return null; }
-            else
-            {
-                UserDto userDto = new UserDto(user.Id, user.Login, user.Login, user.Password);
-                return userDto;
-            }
-            
+            if (user is null) return null;
+            return new UserDto(user.Id, user.Login, user.Login, user.Name);
         }
 
         public Task<UserDto> UpdateUserInfo(UserDto userDto)

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Rider.ViewModels"
+             x:Class="Mobile.Rider.Pages.ConfirmOrderPage"
+             x:DataType="vm:ConfirmOrderViewModel"
+             Style="{StaticResource AppPage}"
+             Title="Подтверждение">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+
+            <Frame Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Style="{StaticResource CaptionLabel}" Text="КУДА" />
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="📍" FontSize="18" VerticalOptions="Start" />
+                        <Label Style="{StaticResource Title2Label}" Text="{Binding ToAddress}" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrame}">
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" RowSpacing="8" ColumnSpacing="10">
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource CaptionLabel}" Text="ДИСТАНЦИЯ" />
+                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource CaptionLabel}" Text="ВРЕМЯ" />
+                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Title2Label}"
+                           Text="{Binding DistanceKm, StringFormat='{0:F1} км'}" />
+                    <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource Title2Label}"
+                           Text="{Binding DurationMin, StringFormat='~{0:F0} мин'}" />
+                </Grid>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Style="{StaticResource CaptionLabel}" Text="КЛАСС АВТО" />
+                    <Picker ItemsSource="{Binding VehicleTypes}"
+                            SelectedItem="{Binding SelectedVehicleType, Mode=TwoWay}"
+                            FontFamily="OpenSansRegular" FontSize="15" TextColor="{StaticResource Ink}" />
+                    <BoxView HeightRequest="1" Color="{StaticResource HairLine}" Margin="0,4" />
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox IsChecked="{Binding NeedChildSeat}" Color="{StaticResource Brand}" />
+                        <Label Style="{StaticResource BodyLabel}" Text="Нужно детское кресло" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource HeroFrame}">
+                <VerticalStackLayout Spacing="2">
+                    <Label Style="{StaticResource CaptionLabel}" Text="ИТОГО" />
+                    <Label Style="{StaticResource PriceLabel}" Text="{Binding Price, StringFormat='{0:F0} ₽'}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Style="{StaticResource PrimaryButton}" Text="Заказать"
+                    Command="{Binding PlaceOrderCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource Inverter}}" />
+            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
+            <Label Style="{StaticResource CaptionLabel}" HorizontalOptions="Center"
+                   Text="{Binding StatusText}"
+                   IsVisible="{Binding StatusText, Converter={StaticResource StringNotEmpty}}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

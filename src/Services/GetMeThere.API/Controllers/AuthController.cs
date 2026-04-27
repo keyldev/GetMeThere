@@ -24,15 +24,9 @@ namespace GetMeThere.API.Controllers
         public async Task<IActionResult> Login([FromBody]LoginRequest login)
         {
             var loginResult = await _authService.Login(login);
-
             if (loginResult == null)
-            {
-                return NotFound(new
-                {
-                    message = "Account not found!"
-                });
-            }
-            else return Ok(loginResult);
+                return Unauthorized(new { message = "Invalid credentials" });
+            return Ok(loginResult);
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
@@ -49,5 +43,17 @@ namespace GetMeThere.API.Controllers
             else return Ok(registerResult);
         }
 
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshRequest request)
+        {
+            if (request?.RefreshToken == null)
+                return BadRequest(new { message = "RefreshToken is required" });
+
+            var result = await _authService.Refresh(request.RefreshToken);
+            if (result == null)
+                return Unauthorized(new { message = "Invalid or expired refresh token" });
+
+            return Ok(result);
+        }
     }
 }

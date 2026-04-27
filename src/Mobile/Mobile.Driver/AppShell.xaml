@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Mobile.Driver.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Mobile.Driver.Pages"
+    Shell.FlyoutBehavior="Disabled">
+
+    <ShellContent Title="Вход" ContentTemplate="{DataTemplate pages:LoginPage}" Route="login" />
+    <ShellContent Title="Авто" ContentTemplate="{DataTemplate pages:RegisterDriverPage}" Route="register-driver" />
+    <ShellContent Title="На линии" ContentTemplate="{DataTemplate pages:OnlinePage}" Route="online" />
+    <ShellContent Title="К пассажиру" ContentTemplate="{DataTemplate pages:EnRoutePage}" Route="en-route" />
+    <ShellContent Title="В поездке" ContentTemplate="{DataTemplate pages:InTripPage}" Route="in-trip" />
+
+</Shell>

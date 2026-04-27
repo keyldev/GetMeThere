@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Driver.ViewModels"
+             x:Class="Mobile.Driver.Pages.IncomingOrderModal"
+             x:DataType="vm:IncomingOrderViewModel"
+             Title="Новый заказ"
+             BackgroundColor="{StaticResource Canvas}"
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14" VerticalOptions="Center">
+
+            <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                <Label Text="🚖" FontSize="44" HorizontalOptions="Center" />
+                <Label Style="{StaticResource HeadlineLabel}" Text="Новый заказ" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <Frame Style="{StaticResource HeroFrame}">
+                <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                    <Label Style="{StaticResource CaptionLabel}" Text="К ОПЛАТЕ" HorizontalOptions="Center" />
+                    <Label Style="{StaticResource PriceLabel}"
+                           Text="{Binding Offer.Price, StringFormat='{0:F0} ₽'}"
+                           HorizontalOptions="Center" />
+                    <Label Style="{StaticResource CaptionLabel}"
+                           Text="{Binding Offer.VehicleType, StringFormat='Класс: {0}'}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="14">
+                    <VerticalStackLayout Spacing="2">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="🟢" FontSize="14" />
+                            <Label Style="{StaticResource CaptionLabel}" Text="ОТКУДА" />
+                        </HorizontalStackLayout>
+                        <Label Style="{StaticResource BodyLabel}" Margin="22,0,0,0"
+                               Text="{Binding Offer.PickupAddress, FallbackValue='—', TargetNullValue='—'}" />
+                    </VerticalStackLayout>
+
+                    <BoxView HeightRequest="1" Color="{StaticResource HairLine}" />
+
+                    <VerticalStackLayout Spacing="2">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="🔴" FontSize="14" />
+                            <Label Style="{StaticResource CaptionLabel}" Text="КУДА" />
+                        </HorizontalStackLayout>
+                        <Label Style="{StaticResource BodyLabel}" Margin="22,0,0,0"
+                               Text="{Binding Offer.DestinationAddress, FallbackValue='—', TargetNullValue='—'}" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Style="{StaticResource CaptionLabel}" HorizontalOptions="Center"
+                       Text="{Binding SecondsLeft, StringFormat='Ответьте за {0} сек'}" />
+                <ProgressBar Progress="{Binding Progress}"
+                             ProgressColor="{StaticResource Brand}"
+                             HeightRequest="6" />
+            </VerticalStackLayout>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Grid.Column="0" Style="{StaticResource SecondaryButton}"
+                        Text="Отказаться" Command="{Binding DeclineCommand}" HeightRequest="52" />
+                <Button Grid.Column="1" Style="{StaticResource SuccessButton}"
+                        Text="Принять" Command="{Binding AcceptCommand}" HeightRequest="52" />
+            </Grid>
+
+            <Label Style="{StaticResource ErrorLabel}" HorizontalOptions="Center"
+                   Text="{Binding StatusText}"
+                   IsVisible="{Binding StatusText, Converter={StaticResource StringNotEmpty}}" />
+            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

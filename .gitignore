@@ -224,3 +224,15 @@ AppPackages/
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
+
+# GetMeThere project-specific
+logs/
+**/logs/
+*.log
+
+# Firebase / FCM credentials (never commit) — Phase 4
+firebase-service-account*.json
+
+# Local secret env files
+.env
+.env.local

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Driver.ViewModels"
+             xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
+             x:Class="Mobile.Driver.Pages.OnlinePage"
+             x:DataType="vm:OnlineViewModel"
+             Style="{StaticResource AppPage}"
+             Title="На линии">
+    <Grid>
+        <mapsui:MapControl x:Name="MapView" />
+
+        <!-- Top: status chip + earnings card stacked -->
+        <VerticalStackLayout VerticalOptions="Start" HorizontalOptions="Fill" Margin="14,18,14,0" Spacing="10">
+
+            <Frame HorizontalOptions="Center" Style="{StaticResource ChipFrame}" Padding="14,8">
+                <HorizontalStackLayout Spacing="8">
+                    <Ellipse HeightRequest="10" WidthRequest="10" VerticalOptions="Center">
+                        <Ellipse.Triggers>
+                            <DataTrigger TargetType="Ellipse" Binding="{Binding IsOnline}" Value="True">
+                                <Setter Property="Fill" Value="{StaticResource Accent}" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Ellipse" Binding="{Binding IsOnline}" Value="False">
+                                <Setter Property="Fill" Value="{StaticResource Muted}" />
+                            </DataTrigger>
+                        </Ellipse.Triggers>
+                    </Ellipse>
+                    <Label Style="{StaticResource BodyLabel}" Text="{Binding StatusText}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource HeroFrame}" Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Style="{StaticResource CaptionLabel}" Text="СЕГОДНЯ" />
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Style="{StaticResource Title2Label}" Text="{Binding OrdersToday}" />
+                            <Label Style="{StaticResource CaptionLabel}" Text="заказов" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Style="{StaticResource Title2Label}" Text="{Binding RubEarned, StringFormat='{0} ₽'}" />
+                            <Label Style="{StaticResource CaptionLabel}" Text="заработано" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="2" Spacing="2">
+                            <Label Style="{StaticResource Title2Label}" Text="{Binding HoursOnline, StringFormat='{0:F1} ч'}" />
+                            <Label Style="{StaticResource CaptionLabel}" Text="на линии" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+
+        <!-- Bottom toggle CTA -->
+        <Frame VerticalOptions="End" Margin="14,0,14,14"
+               Style="{StaticResource CardFrame}" Padding="18">
+            <VerticalStackLayout Spacing="10">
+                <Label Style="{StaticResource CaptionLabel}"
+                       Text="{Binding CurrentLatitude, StringFormat='lat: {0:F5}'}" />
+                <Label Style="{StaticResource CaptionLabel}"
+                       Text="{Binding CurrentLongitude, StringFormat='lng: {0:F5}'}" />
+
+                <Button Command="{Binding ToggleCommand}" HeightRequest="56" CornerRadius="14"
+                        FontFamily="OpenSansSemibold" FontSize="16">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsOnline}" Value="True">
+                            <Setter Property="Text" Value="Уйти с линии" />
+                            <Setter Property="BackgroundColor" Value="{StaticResource Danger}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsOnline}" Value="False">
+                            <Setter Property="Text" Value="Выйти на линию" />
+                            <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
+                            <Setter Property="TextColor" Value="White" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

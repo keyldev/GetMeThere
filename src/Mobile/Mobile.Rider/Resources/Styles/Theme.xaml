@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Brand palette (taxi amber) -->
+    <Color x:Key="Brand">#FFB300</Color>
+    <Color x:Key="BrandDark">#FF8F00</Color>
+    <Color x:Key="BrandSoft">#FFF3D6</Color>
+    <Color x:Key="Accent">#1565C0</Color>
+    <Color x:Key="Ink">#1C1C1E</Color>
+    <Color x:Key="InkSoft">#3A3A3C</Color>
+    <Color x:Key="Muted">#8A8A8E</Color>
+    <Color x:Key="Surface">#FFFFFF</Color>
+    <Color x:Key="Canvas">#F5F5F7</Color>
+    <Color x:Key="HairLine">#E5E5EA</Color>
+    <Color x:Key="Danger">#E53935</Color>
+    <Color x:Key="Success">#2E7D32</Color>
+
+    <!-- Typography -->
+    <Style x:Key="HeadlineLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="TextColor" Value="{StaticResource Ink}" />
+    </Style>
+
+    <Style x:Key="Title2Label" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="TextColor" Value="{StaticResource Ink}" />
+    </Style>
+
+    <Style x:Key="BodyLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextColor" Value="{StaticResource InkSoft}" />
+    </Style>
+
+    <Style x:Key="CaptionLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource Muted}" />
+    </Style>
+
+    <Style x:Key="PriceLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="TextColor" Value="{StaticResource Ink}" />
+    </Style>
+
+    <Style x:Key="ErrorLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource Danger}" />
+    </Style>
+
+    <!-- Buttons -->
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Brand}" />
+        <Setter Property="TextColor" Value="{StaticResource Ink}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="Padding" Value="20,0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource HairLine}" />
+                            <Setter Property="TextColor" Value="{StaticResource Muted}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SecondaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource Accent}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="BorderColor" Value="{StaticResource HairLine}" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
+
+    <Style x:Key="DangerButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Danger}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="HeightRequest" Value="48" />
+    </Style>
+
+    <Style x:Key="GhostButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource Accent}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HeightRequest" Value="40" />
+    </Style>
+
+    <!-- Inputs -->
+    <Style x:Key="RoundedEntry" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource Ink}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource Muted}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="HeightRequest" Value="48" />
+    </Style>
+
+    <Style x:Key="EntryFrame" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+        <Setter Property="BorderColor" Value="{StaticResource HairLine}" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Padding" Value="14,4" />
+        <Setter Property="HasShadow" Value="False" />
+    </Style>
+
+    <!-- Cards / containers -->
+    <Style x:Key="CardFrame" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+        <Setter Property="BorderColor" Value="{StaticResource HairLine}" />
+        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="Padding" Value="18" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="Shadow">
+            <Shadow Brush="Black" Offset="0,6" Radius="16" Opacity="0.08" />
+        </Setter>
+    </Style>
+
+    <Style x:Key="HeroFrame" TargetType="Frame">
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="22" />
+        <Setter Property="Padding" Value="22" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="Background">
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="{StaticResource BrandSoft}" Offset="0.0" />
+                <GradientStop Color="{StaticResource Surface}" Offset="1.0" />
+            </LinearGradientBrush>
+        </Setter>
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource Brand}" Offset="0,8" Radius="20" Opacity="0.18" />
+        </Setter>
+    </Style>
+
+    <Style x:Key="ChipFrame" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="Shadow">
+            <Shadow Brush="Black" Offset="0,4" Radius="12" Opacity="0.10" />
+        </Setter>
+    </Style>
+
+    <!-- Page baseline -->
+    <Style x:Key="AppPage" TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{StaticResource Canvas}" />
+        <Setter Property="Shell.BackgroundColor" Value="{StaticResource Brand}" />
+        <Setter Property="Shell.ForegroundColor" Value="{StaticResource Ink}" />
+        <Setter Property="Shell.TitleColor" Value="{StaticResource Ink}" />
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Rider.ViewModels"
+             xmlns:svc="clr-namespace:Mobile.Rider.Services"
+             x:Class="Mobile.Rider.Pages.DestinationSearchPage"
+             x:DataType="vm:DestinationSearchViewModel"
+             Style="{StaticResource AppPage}"
+             Title="Куда">
+    <Grid RowDefinitions="Auto, *" Padding="16,12,16,16" RowSpacing="14">
+
+        <Frame Grid.Row="0" Style="{StaticResource EntryFrame}" Padding="14,2">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                <Label Grid.Column="0" Text="🔎" FontSize="18" VerticalOptions="Center" />
+                <Entry Grid.Column="1" Style="{StaticResource RoundedEntry}"
+                       Placeholder="Адрес назначения…" Text="{Binding Query, Mode=TwoWay}" />
+                <ActivityIndicator Grid.Column="2"
+                                   IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"
+                                   VerticalOptions="Center" />
+            </Grid>
+        </Frame>
+
+        <CollectionView Grid.Row="1"
+                        x:Name="ResultsView"
+                        ItemsSource="{Binding Results}"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding PickCommand}"
+                        SelectionChangedCommandParameter="{Binding Source={x:Reference ResultsView}, Path=SelectedItem}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="svc:NominatimResult">
+                    <Frame Style="{StaticResource CardFrame}" Padding="14">
+                        <HorizontalStackLayout Spacing="12">
+                            <Label Text="📍" FontSize="20" VerticalOptions="Center" />
+                            <Label Style="{StaticResource BodyLabel}" Text="{Binding DisplayName}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="20" Spacing="6" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="🗺" FontSize="48" HorizontalOptions="Center" />
+                    <Label Style="{StaticResource BodyLabel}" Text="Введите адрес для поиска" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

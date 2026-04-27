@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Driver.ViewModels"
+             x:Class="Mobile.Driver.Pages.EnRoutePage"
+             x:DataType="vm:EnRouteViewModel"
+             Style="{StaticResource AppPage}"
+             Title="К пассажиру">
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16" Spacing="14">
+
+            <Frame Style="{StaticResource HeroFrame}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="🧭" FontSize="40" />
+                    <Label Style="{StaticResource Title2Label}" Text="{Binding StatusText}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Style="{StaticResource CaptionLabel}" Text="ТОЧКА ПОДАЧИ" />
+                    <Label Style="{StaticResource BodyLabel}"
+                           Text="{Binding PickupLat, StringFormat='lat: {0:F5}'}" />
+                    <Label Style="{StaticResource BodyLabel}"
+                           Text="{Binding PickupLng, StringFormat='lng: {0:F5}'}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <VerticalStackLayout Spacing="10">
+                <Button Style="{StaticResource SecondaryButton}" Text="🚗 В пути"
+                        Command="{Binding MarkEnRouteCommand}" HeightRequest="52" />
+                <Button Style="{StaticResource SecondaryButton}" Text="📍 Я прибыл"
+                        Command="{Binding MarkArrivedCommand}" HeightRequest="52" />
+                <Button Style="{StaticResource SuccessButton}" Text="▶ Старт поездки"
+                        Command="{Binding StartTripCommand}" IsEnabled="{Binding HasArrived}" />
+            </VerticalStackLayout>
+
+            <Label Style="{StaticResource ErrorLabel}" Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmpty}}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

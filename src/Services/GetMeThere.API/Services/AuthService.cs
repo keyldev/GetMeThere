@@ -1,4 +1,4 @@
-﻿using GetMeThere.API.Models;
+using GetMeThere.API.Models;
 using GetMeThere.API.Models.DTO;
 using GetMeThere.API.Repositories;
 using System.Security.Claims;
@@ -7,79 +7,84 @@ namespace GetMeThere.API.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IConfiguration _configuration;
         private readonly IAuthRepository _authRepository;
         private readonly ITokenService _tokenService;
-        public AuthService(IConfiguration configuration, IAuthRepository authRepository, ITokenService tokenService)
+
+        public AuthService(IAuthRepository authRepository, ITokenService tokenService)
         {
-            _configuration = configuration;
             _authRepository = authRepository;
             _tokenService = tokenService;
         }
 
-        public async Task<AuthResultDto> Login(LoginRequest request)
+        public async Task<AuthResultDto?> Login(LoginRequest request)
         {
-            var user = await _authRepository.GetUser(login: request.Username, password: request.Password);
-            if (user != null)
-            {
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.Name, request.Username)
-                };
-                var accessToken = _tokenService.GetAccessToken(claims);
-                var refreshToken = _authRepository.GetUserRefreshToken(request.Username);
-                
-
-                // sugar. #changeme
-                if(refreshToken is not null && refreshToken.ExpiryTime < DateTime.UtcNow)
-                {
-                    refreshToken = _tokenService.GetRefreshToken(user.Id, DateTime.UtcNow);
-                    await _authRepository.UpdateUserRefreshToken(user.Id, refreshToken);
-                }
-                else
-                {
-                    refreshToken = _tokenService.GetRefreshToken(user.Id, DateTime.UtcNow);
-                    await _authRepository.InsertUserRefreshToken(refreshToken);
-                }
-
-                // change to AuthResultDto with AccessToken & RefreshToken only?
-                return new AuthResultDto
-                {
-                    AccessToken = accessToken,
-                    RefreshToken = refreshToken.TokenString,
-                    
-                };
-            }
-            else
-            {
+            if (string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
                 return null;
-            }
+
+            var user = await _authRepository.GetUserByLogin(request.Username);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+                return null;
+
+            return await IssueTokensAsync(user);
         }
 
-        public async Task<AuthResultDto> Register(RegisterRequest request)
+        public async Task<AuthResultDto?> Register(RegisterRequest request)
         {
-            var isUserExists = await _authRepository.IsUserExists(login: request.Login, password: request.Password);
-            if (isUserExists)
-            {
+            if (string.IsNullOrEmpty(request.Login) || string.IsNullOrEmpty(request.Password))
                 return null;
-            }
-            else
-            {
-                var user = await _authRepository.CreateUser(request);
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.Name, user.Name)
-                };
-                
-                var tokens = _tokenService.GetTokens(user, claims, DateTime.UtcNow);
-                await _authRepository.InsertUserRefreshToken(tokens.RefreshToken);
 
-                return new AuthResultDto
-                {
-                    AccessToken = tokens.AccessToken,
-                    RefreshToken = tokens.RefreshToken.TokenString
-                };
-            }
+            if (await _authRepository.IsLoginTaken(request.Login))
+                return null;
+
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Login = request.Login,
+                Name = request.Name ?? "",
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password)
+            };
+            user = await _authRepository.CreateUser(user);
+
+            return await IssueTokensAsync(user);
+        }
+
+        public async Task<AuthResultDto?> Refresh(string refreshToken)
+        {
+            if (string.IsNullOrEmpty(refreshToken))
+                return null;
+
+            var stored = await _authRepository.GetRefreshTokenByString(refreshToken);
+            if (stored == null || stored.ExpiryTime < DateTime.UtcNow)
+                return null;
+
+            var user = await _authRepository.GetUserById(stored.UserId);
+            if (user == null)
+                return null;
+
+            return await IssueTokensAsync(user);
+        }
+
+        private async Task<AuthResultDto> IssueTokensAsync(User user)
+        {
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Name, user.Login),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            };
+            var accessToken = _tokenService.GetAccessToken(claims);
+            var newRefresh = _tokenService.GetRefreshToken(user.Id, DateTime.UtcNow);
+
+            var existing = await _authRepository.GetUserRefreshToken(user.Id);
+            if (existing != null)
+                await _authRepository.UpdateUserRefreshToken(user.Id, newRefresh);
+            else
+                await _authRepository.InsertUserRefreshToken(newRefresh);
+
+            return new AuthResultDto
+            {
+                AccessToken = accessToken,
+                RefreshToken = newRefresh.TokenString
+            };
         }
     }
 }

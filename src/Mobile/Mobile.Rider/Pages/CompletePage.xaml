@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Rider.ViewModels"
+             x:Class="Mobile.Rider.Pages.CompletePage"
+             x:DataType="vm:CompleteViewModel"
+             Style="{StaticResource AppPage}"
+             Shell.NavBarIsVisible="False">
+    <Grid Padding="24" RowDefinitions="*,Auto,*">
+        <VerticalStackLayout Grid.Row="1" Spacing="18" HorizontalOptions="Center">
+            <Frame BackgroundColor="#E8F5E9" CornerRadius="60"
+                   HeightRequest="120" WidthRequest="120" Padding="0"
+                   HasShadow="False" BorderColor="Transparent" HorizontalOptions="Center">
+                <Label Text="✓" FontSize="64" HorizontalOptions="Center" VerticalOptions="Center"
+                       TextColor="{StaticResource Success}" />
+            </Frame>
+            <Label Style="{StaticResource HeadlineLabel}" HorizontalOptions="Center" Text="Спасибо!" />
+            <Label Style="{StaticResource BodyLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                   Text="Поездка завершена. Хорошего дня!" />
+            <Frame Style="{StaticResource ChipFrame}" HorizontalOptions="Center">
+                <Label Style="{StaticResource CaptionLabel}" Text="Оцените поездку (скоро)" />
+            </Frame>
+            <Button Style="{StaticResource PrimaryButton}" Text="На главную"
+                    Command="{Binding GoHomeCommand}" Margin="0,8,0,0" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

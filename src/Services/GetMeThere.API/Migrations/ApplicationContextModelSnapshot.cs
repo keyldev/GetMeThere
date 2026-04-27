@@ -45,6 +45,18 @@ namespace GetMeThere.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<double?>("CurrentLatitude")
+                        .HasColumnType("double");
+
+                    b.Property<double?>("CurrentLongitude")
+                        .HasColumnType("double");
+
+                    b.Property<DateTime?>("LastLocationUpdate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
@@ -66,6 +78,9 @@ namespace GetMeThere.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<DateTime?>("AssignedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<Guid>("ClientId")
                         .HasColumnType("char(36)");
 
@@ -81,14 +96,14 @@ namespace GetMeThere.API.Migrations
                     b.Property<double>("DestinationLongitude")
                         .HasColumnType("double");
 
+                    b.Property<DateTime?>("DriverArrivedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<Guid?>("DriverId")
                         .HasColumnType("char(36)");
 
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<DateTime?>("EstimatedArrival")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<bool>("NeedChildSeat")
                         .HasColumnType("tinyint(1)");
@@ -108,7 +123,13 @@ namespace GetMeThere.API.Migrations
                     b.Property<DateTime>("PickupTime")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("RoutePolyline")
+                        .HasColumnType("longtext");
+
                     b.Property<int>("SeatsCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("TaxiDriverDriverId")
@@ -131,7 +152,9 @@ namespace GetMeThere.API.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("ConnectionId")
-                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FcmDeviceToken")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Login")
@@ -142,8 +165,11 @@ namespace GetMeThere.API.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

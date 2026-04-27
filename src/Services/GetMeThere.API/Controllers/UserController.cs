@@ -1,10 +1,7 @@
-﻿using GetMeThere.API.Services;
+using GetMeThere.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.JsonWebTokens;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using System.Security.Claims;
 
 namespace GetMeThere.API.Controllers
@@ -14,28 +11,22 @@ namespace GetMeThere.API.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
-        public UserController(IConfiguration configuration, IUserService userService)
+
+        public UserController(IUserService userService)
         {
-            _configuration = configuration;
             _userService = userService;
         }
-        
+
         [HttpGet("info")]
         public async Task<IActionResult> GetUserInfo()
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var username = identity.Name;
-            
-            
+            var username = (HttpContext.User.Identity as ClaimsIdentity)?.Name;
+            if (string.IsNullOrEmpty(username)) return Unauthorized();
+
             var userInfo = await _userService.GetUserInfo(username);
-            if (userInfo == null) return BadRequest(new
-            {
-                message = "An error occured" // #change it
-            });
+            if (userInfo == null) return NotFound();
             return Ok(userInfo);
         }
-
     }
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Driver.ViewModels"
+             x:Class="Mobile.Driver.Pages.RegisterDriverPage"
+             x:DataType="vm:RegisterDriverViewModel"
+             Style="{StaticResource AppPage}"
+             Title="Авто и документы">
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16,20,32" Spacing="16">
+
+            <VerticalStackLayout Spacing="6">
+                <Label Style="{StaticResource HeadlineLabel}" Text="Расскажите о машине" />
+                <Label Style="{StaticResource BodyLabel}" Text="Эти данные увидят пассажиры" />
+            </VerticalStackLayout>
+
+            <Frame Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Style="{StaticResource CaptionLabel}" Text="ГОСНОМЕР" />
+                    <Frame Style="{StaticResource EntryFrame}">
+                        <Entry Style="{StaticResource RoundedEntry}" Placeholder="А123БВ77" Text="{Binding LicensePlate}" />
+                    </Frame>
+
+                    <Label Style="{StaticResource CaptionLabel}" Text="МАРКА И МОДЕЛЬ" Margin="0,4,0,0" />
+                    <Frame Style="{StaticResource EntryFrame}">
+                        <Entry Style="{StaticResource RoundedEntry}" Placeholder="Toyota Camry" Text="{Binding Model}" />
+                    </Frame>
+
+                    <Label Style="{StaticResource CaptionLabel}" Text="ЦВЕТ" Margin="0,4,0,0" />
+                    <Frame Style="{StaticResource EntryFrame}">
+                        <Entry Style="{StaticResource RoundedEntry}" Placeholder="белый" Text="{Binding Color}" />
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Style="{StaticResource CaptionLabel}" Text="КЛАСС" />
+                    <Picker ItemsSource="{Binding VehicleTypes}"
+                            SelectedItem="{Binding SelectedVehicleType, Mode=TwoWay}"
+                            FontFamily="OpenSansRegular" FontSize="15" TextColor="{StaticResource Ink}" />
+
+                    <BoxView HeightRequest="1" Color="{StaticResource HairLine}" Margin="0,4" />
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="6">
+                        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource BodyLabel}" Text="Мест в авто" VerticalOptions="Center" />
+                        <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource Title2Label}"
+                               Text="{Binding SeatsCount}" VerticalOptions="Center" />
+                        <Stepper Grid.Row="1" Grid.ColumnSpan="2" Minimum="1" Maximum="8" Value="{Binding SeatsCount, Mode=TwoWay}" />
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="{StaticResource HairLine}" Margin="0,4" />
+
+                    <HorizontalStackLayout Spacing="10">
+                        <CheckBox IsChecked="{Binding HaveChildSeat}" Color="{StaticResource Brand}" />
+                        <Label Style="{StaticResource BodyLabel}" Text="Есть детское кресло" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Style="{StaticResource ErrorLabel}" Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmpty}}" />
+
+            <VerticalStackLayout Spacing="10">
+                <Button Style="{StaticResource PrimaryButton}" Text="Готово"
+                        Command="{Binding SubmitCommand}"
+                        IsEnabled="{Binding IsBusy, Converter={StaticResource Inverter}}" />
+                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
+                <Button Style="{StaticResource GhostButton}" Text="Уже зарегистрирован"
+                        Command="{Binding SkipCommand}" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

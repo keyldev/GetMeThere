@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Rider.ViewModels"
+             xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
+             x:Class="Mobile.Rider.Pages.WaitingPage"
+             x:DataType="vm:WaitingViewModel"
+             Style="{StaticResource AppPage}"
+             Shell.NavBarIsVisible="False">
+    <Grid>
+        <mapsui:MapControl x:Name="MapView" />
+
+        <!-- Top status chip -->
+        <Frame VerticalOptions="Start" HorizontalOptions="Center" Margin="0,18,0,0"
+               Style="{StaticResource ChipFrame}" Padding="14,8">
+            <HorizontalStackLayout Spacing="8">
+                <ActivityIndicator IsRunning="True" Color="{StaticResource Brand}" HeightRequest="18" WidthRequest="18" />
+                <Label Style="{StaticResource BodyLabel}" Text="{Binding StatusText}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </Frame>
+
+        <!-- Bottom info: timeline + driver card + cancel -->
+        <VerticalStackLayout VerticalOptions="End" Spacing="10" Margin="14,0,14,14">
+
+            <!-- Stage timeline -->
+            <Frame Style="{StaticResource CardFrame}" Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,*,*,*,*" RowDefinitions="14,Auto" RowSpacing="8">
+                        <BoxView Grid.Row="0" Grid.ColumnSpan="5"
+                                 HeightRequest="3" Color="{StaticResource HairLine}"
+                                 VerticalOptions="Center" Margin="20,0" />
+
+                        <Ellipse Grid.Row="0" Grid.Column="0" HeightRequest="14" WidthRequest="14"
+                                 HorizontalOptions="Center" VerticalOptions="Center" Stroke="White" StrokeThickness="2">
+                            <Ellipse.Triggers>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding Stage1Done}" Value="True">
+                                    <Setter Property="Fill" Value="{StaticResource Brand}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding Stage1Done}" Value="False">
+                                    <Setter Property="Fill" Value="{StaticResource HairLine}" />
+                                </DataTrigger>
+                            </Ellipse.Triggers>
+                        </Ellipse>
+                        <Ellipse Grid.Row="0" Grid.Column="1" HeightRequest="14" WidthRequest="14"
+                                 HorizontalOptions="Center" VerticalOptions="Center" Stroke="White" StrokeThickness="2">
+                            <Ellipse.Triggers>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding Stage2Done}" Value="True">
+                                    <Setter Property="Fill" Value="{StaticResource Brand}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding Stage2Done}" Value="False">
+                                    <Setter Property="Fill" Value="{StaticResource HairLine}" />
+                                </DataTrigger>
+                            </Ellipse.Triggers>
+                        </Ellipse>
+                        <Ellipse Grid.Row="0" Grid.Column="2" HeightRequest="14" WidthRequest="14"
+                                 HorizontalOptions="Center" VerticalOptions="Center" Stroke="White" StrokeThickness="2">
+                            <Ellipse.Triggers>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding Stage3Done}" Value="True">
+                                    <Setter Property="Fill" Value="{StaticResource Brand}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding Stage3Done}" Value="False">
+                                    <Setter Property="Fill" Value="{StaticResource HairLine}" />
+                                </DataTrigger>
+                            </Ellipse.Triggers>
+                        </Ellipse>
+                        <Ellipse Grid.Row="0" Grid.Column="3" HeightRequest="14" WidthRequest="14"
+                                 HorizontalOptions="Center" VerticalOptions="Center" Stroke="White" StrokeThickness="2">
+                            <Ellipse.Triggers>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding Stage4Done}" Value="True">
+                                    <Setter Property="Fill" Value="{StaticResource Brand}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding Stage4Done}" Value="False">
+                                    <Setter Property="Fill" Value="{StaticResource HairLine}" />
+                                </DataTrigger>
+                            </Ellipse.Triggers>
+                        </Ellipse>
+                        <Ellipse Grid.Row="0" Grid.Column="4" HeightRequest="14" WidthRequest="14"
+                                 HorizontalOptions="Center" VerticalOptions="Center" Stroke="White" StrokeThickness="2">
+                            <Ellipse.Triggers>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding Stage5Done}" Value="True">
+                                    <Setter Property="Fill" Value="{StaticResource Brand}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Ellipse" Binding="{Binding Stage5Done}" Value="False">
+                                    <Setter Property="Fill" Value="{StaticResource HairLine}" />
+                                </DataTrigger>
+                            </Ellipse.Triggers>
+                        </Ellipse>
+
+                        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource CaptionLabel}" Text="Поиск" HorizontalOptions="Center" />
+                        <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource CaptionLabel}" Text="Принят" HorizontalOptions="Center" />
+                        <Label Grid.Row="1" Grid.Column="2" Style="{StaticResource CaptionLabel}" Text="В пути" HorizontalOptions="Center" />
+                        <Label Grid.Row="1" Grid.Column="3" Style="{StaticResource CaptionLabel}" Text="Прибыл" HorizontalOptions="Center" />
+                        <Label Grid.Row="1" Grid.Column="4" Style="{StaticResource CaptionLabel}" Text="Поездка" HorizontalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrame}"
+                   IsVisible="{Binding DriverName, Converter={StaticResource StringNotEmpty}}">
+                <Grid ColumnDefinitions="56,*" ColumnSpacing="12">
+                    <Frame Grid.Column="0" BackgroundColor="{StaticResource BrandSoft}"
+                           CornerRadius="28" HeightRequest="56" WidthRequest="56"
+                           Padding="0" HasShadow="False" BorderColor="Transparent">
+                        <Label Text="🧑‍✈️" FontSize="28" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Frame>
+                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                        <Label Style="{StaticResource Title2Label}" Text="{Binding DriverName}" />
+                        <Label Style="{StaticResource CaptionLabel}" Text="{Binding DriverVehicleSummary}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Frame>
+
+            <Button Style="{StaticResource DangerButton}" Text="Отменить заказ"
+                    Command="{Binding CancelCommand}" IsEnabled="{Binding CanCancel}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

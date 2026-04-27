@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Rider.ViewModels"
+             xmlns:mapsui="clr-namespace:Mapsui.UI.Maui;assembly=Mapsui.UI.Maui"
+             x:Class="Mobile.Rider.Pages.MapPage"
+             x:DataType="vm:MapViewModel"
+             Style="{StaticResource AppPage}"
+             Shell.NavBarIsVisible="False">
+    <Grid>
+        <mapsui:MapControl x:Name="MapView" />
+
+        <Frame VerticalOptions="End" Margin="14,0,14,14"
+               Style="{StaticResource CardFrame}" Padding="20">
+            <VerticalStackLayout Spacing="12">
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Label Text="📍" FontSize="22" VerticalOptions="Center" />
+                    <Label Style="{StaticResource Title2Label}" Text="{Binding StatusText}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Label Style="{StaticResource CaptionLabel}"
+                       Text="{Binding CurrentLatitude, StringFormat='lat: {0:F5}'}" />
+                <Label Style="{StaticResource CaptionLabel}"
+                       Text="{Binding CurrentLongitude, StringFormat='lng: {0:F5}'}" />
+                <Button Style="{StaticResource PrimaryButton}" Text="Куда едем?"
+                        Command="{Binding ChooseDestinationCommand}" Margin="0,4,0,0" />
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

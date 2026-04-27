@@ -18,7 +18,7 @@ namespace GetMeThere.API.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<User> GetUserInfo(string username)
+        public async Task<User?> GetUserInfo(string username)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(u => u.Login == username);
         }

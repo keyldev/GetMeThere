@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Driver.ViewModels"
+             x:Class="Mobile.Driver.Pages.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             Style="{StaticResource AppPage}"
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="28,48" Spacing="24">
+
+            <Frame Style="{StaticResource HeroFrame}" Margin="0,0,0,8">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="🚗" FontSize="44" />
+                    <Label Style="{StaticResource HeadlineLabel}" Text="GetMeThere" />
+                    <Label Style="{StaticResource BodyLabel}" Text="Кабинет водителя" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <VerticalStackLayout Spacing="12">
+                <Label Style="{StaticResource CaptionLabel}" Text="ЛОГИН" />
+                <Frame Style="{StaticResource EntryFrame}">
+                    <Entry Style="{StaticResource RoundedEntry}" Placeholder="ваш логин" Text="{Binding Username}" />
+                </Frame>
+
+                <Label Style="{StaticResource CaptionLabel}" Text="ПАРОЛЬ" Margin="0,8,0,0" />
+                <Frame Style="{StaticResource EntryFrame}">
+                    <Entry Style="{StaticResource RoundedEntry}" Placeholder="••••••••" IsPassword="True" Text="{Binding Password}" />
+                </Frame>
+            </VerticalStackLayout>
+
+            <Label Style="{StaticResource ErrorLabel}" Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmpty}}" />
+
+            <VerticalStackLayout Spacing="10" Margin="0,8,0,0">
+                <Button Style="{StaticResource PrimaryButton}" Text="Войти"
+                        Command="{Binding LoginCommand}"
+                        IsEnabled="{Binding IsBusy, Converter={StaticResource Inverter}}" />
+                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
+                <Button Style="{StaticResource GhostButton}" Text="Зарегистрироваться как водитель"
+                        Command="{Binding RegisterAccountCommand}" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

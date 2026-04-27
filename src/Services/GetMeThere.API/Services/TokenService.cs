@@ -1,4 +1,5 @@
-﻿using GetMeThere.API.Models;
+using GetMeThere.API.Configuration;
+using GetMeThere.API.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,57 +10,48 @@ namespace GetMeThere.API.Services
 {
     public class TokenService : ITokenService
     {
-        private readonly IConfiguration _configuration;
-        public TokenService(IConfiguration configuration)
+        private readonly JwtOptions _jwt;
+
+        public TokenService(JwtOptions jwt)
         {
-            _configuration = configuration;
+            _jwt = jwt;
         }
 
-        public string GetAccessToken(IEnumerable<Claim> claims)
-        {
-            return GenerateAccessToken(claims);
-        }
-        public RefreshToken GetRefreshToken(Guid userId, DateTime date)
-        {
-            return GenerateRefreshToken(userId, date);
-        }
-        
-        public JwtAuthResult GetTokens(User user, IEnumerable<Claim> claims, DateTime date)
-        {
-            return new JwtAuthResult
+        public string GetAccessToken(IEnumerable<Claim> claims) => GenerateAccessToken(claims);
+
+        public RefreshToken GetRefreshToken(Guid userId, DateTime date) => GenerateRefreshToken(userId, date);
+
+        public JwtAuthResult GetTokens(User user, IEnumerable<Claim> claims, DateTime date) =>
+            new JwtAuthResult
             {
                 AccessToken = GenerateAccessToken(claims),
                 RefreshToken = GenerateRefreshToken(user.Id, date)
             };
-        }
+
         private string GenerateAccessToken(IEnumerable<Claim> claims)
         {
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt")["Key"]));
-            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt.Key));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var jwt = new JwtSecurityToken(
-                issuer: _configuration.GetSection("Jwt")["Issuer"],
-                audience: _configuration.GetSection("Jwt")["Audience"],
+                issuer: _jwt.Issuer,
+                audience: _jwt.Audience,
                 expires: DateTime.UtcNow.AddMinutes(30),
                 claims: claims,
-                signingCredentials: signingCredentials
-                );
-            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return token;
+                signingCredentials: creds);
+            return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
-        private RefreshToken GenerateRefreshToken(Guid userId, DateTime date)
+
+        private static RefreshToken GenerateRefreshToken(Guid userId, DateTime date)
         {
             var randomNumber = new byte[32];
-            using var numberGenerator = RandomNumberGenerator.Create();
-            numberGenerator.GetBytes(randomNumber);
-            var token = Convert.ToBase64String(randomNumber);
-
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
             return new RefreshToken
             {
                 UserId = userId,
                 ExpiryTime = date.AddMonths(3),
-                TokenString = token
+                TokenString = Convert.ToBase64String(randomNumber)
             };
         }
-
     }
 }

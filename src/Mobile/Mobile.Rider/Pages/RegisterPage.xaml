@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.Rider.ViewModels"
+             x:Class="Mobile.Rider.Pages.RegisterPage"
+             x:DataType="vm:RegisterViewModel"
+             Style="{StaticResource AppPage}"
+             Title="Регистрация">
+    <ScrollView>
+        <VerticalStackLayout Padding="24,28" Spacing="20">
+
+            <VerticalStackLayout Spacing="6">
+                <Label Style="{StaticResource HeadlineLabel}" Text="Создать аккаунт" />
+                <Label Style="{StaticResource BodyLabel}" Text="Несколько данных и поедем" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="12">
+                <Label Style="{StaticResource CaptionLabel}" Text="ЛОГИН" />
+                <Frame Style="{StaticResource EntryFrame}">
+                    <Entry Style="{StaticResource RoundedEntry}" Placeholder="придумайте логин" Text="{Binding Login}" />
+                </Frame>
+
+                <Label Style="{StaticResource CaptionLabel}" Text="ПАРОЛЬ" Margin="0,8,0,0" />
+                <Frame Style="{StaticResource EntryFrame}">
+                    <Entry Style="{StaticResource RoundedEntry}" Placeholder="минимум 6 символов" IsPassword="True" Text="{Binding Password}" />
+                </Frame>
+
+                <Label Style="{StaticResource CaptionLabel}" Text="EMAIL" Margin="0,8,0,0" />
+                <Frame Style="{StaticResource EntryFrame}">
+                    <Entry Style="{StaticResource RoundedEntry}" Placeholder="you@example.com" Keyboard="Email" Text="{Binding Email}" />
+                </Frame>
+
+                <Label Style="{StaticResource CaptionLabel}" Text="ИМЯ" Margin="0,8,0,0" />
+                <Frame Style="{StaticResource EntryFrame}">
+                    <Entry Style="{StaticResource RoundedEntry}" Placeholder="как к вам обращаться" Text="{Binding Name}" />
+                </Frame>
+            </VerticalStackLayout>
+
+            <Label Style="{StaticResource ErrorLabel}" Text="{Binding ErrorMessage}"
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmpty}}" />
+
+            <VerticalStackLayout Spacing="10" Margin="0,8,0,0">
+                <Button Style="{StaticResource PrimaryButton}" Text="Зарегистрироваться"
+                        Command="{Binding RegisterCommand}"
+                        IsEnabled="{Binding IsBusy, Converter={StaticResource Inverter}}" />
+                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
+                <Button Style="{StaticResource GhostButton}" Text="У меня уже есть аккаунт"
+                        Command="{Binding GoToLoginCommand}" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
